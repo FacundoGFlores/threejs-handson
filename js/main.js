@@ -9,7 +9,10 @@ var geometry = new THREE.BoxGeometry(1, 1, 1);
 var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
 var cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
-camera.position.z = 20;
+camera.position.z = 2;
+
+var raycaster = new THREE.Raycaster();
+var vector = new THREE.Vector2();
 
 function render() {
     requestAnimationFrame( render );
@@ -45,3 +48,15 @@ $(".btnMove").on('click', function(){
         cube.position.y -= 0.5;
     }
 });
+
+function onClick( event ) {
+    vector.x = ( (event.x - renderer.domElement.offsetLeft) / renderer.domElement.clientWidth ) * 2 - 1;
+    vector.y = - ( (event.y - renderer.domElement.offsetTop) / renderer.domElement.clientHeight ) * 2 + 1;
+    raycaster.setFromCamera(vector, camera);
+
+    var intersects = raycaster.intersectObjects(scene.children, true);
+
+    if(intersects.length > 0){
+        console.log(vector.x, vector.y);
+    }
+}document.addEventListener('click', onClick, false);
