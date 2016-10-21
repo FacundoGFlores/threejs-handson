@@ -9,7 +9,7 @@ var geometry = new THREE.BoxGeometry(1, 1, 1);
 var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
 var cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
-camera.position.z = 5;
+camera.position.z = 20;
 
 function render() {
     requestAnimationFrame( render );
@@ -20,11 +20,28 @@ render();
 cube.setColor = function(color){
     cube.material.color = new THREE.Color(color);
 }
+
 $(".btnColor").on('click', function(){
     cube.setColor(this.value);
 });
+
 $("#btnRotate").on('click', function(){
     cube.rotation.x += 0.5;
     cube.rotation.y += 0.5;
     cube.rotation.z += 0.5;
+});
+
+$(".btnMove").on('click', function(){
+    if (this.value == "right") {
+        cube.position.x += 0.5;
+    }
+    if (this.value == "left") {
+        cube.position.x -= 0.5;
+    }
+    if (this.value == "up") {
+        cube.position.y += 0.5;
+    }
+    if (this.value == "down") {
+        cube.position.y -= 0.5;
+    }
 });
